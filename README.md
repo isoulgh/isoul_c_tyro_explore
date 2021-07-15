@@ -1,4 +1,4 @@
-# isoul_c_tyro_expore
+# isoul_c_tyro_explore
 
 此仓库为：
 
