@@ -3,34 +3,10 @@ project(c_tyro_explore)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(6_graph-Graph 6_graph/Graph.cpp)
-
-add_executable(gadget-Fibonacci gadget/Fibonacci.cpp)
-add_executable(gadget-SolutionOfHomogeneous gadget/SolutionOfHomogeneous.cpp)
-
-add_executable(list-LinkList list/LinkList.cpp)
-add_executable(list-LinkListInsert list/LinkListInsert.cpp)
-add_executable(list-SequenceList list/SequenceList.cpp)
-
-add_executable(mess-Demo mess/demo.cpp)
-add_executable(mess-Demo2 mess/demo2.cpp)
-add_executable(mess-Demo3 mess/demo3.cpp)
-add_executable(mess-Main mess/main.cpp)
-add_executable(mess-Main2 mess/main2.cpp)
-add_executable(mess-Test mess/test.cpp)
-add_executable(mess-Test2 mess/test2.cpp)
-
-add_executable(pointer-T01 Pointer/T01.cpp)
-add_executable(pointer-T02 Pointer/T02.cpp)
-
-add_executable(string-KMP string/KMP.cpp)
-add_executable(string-strAssign string/strAssign.cpp)
-add_executable(string-strCompare string/strCompare.cpp)
-add_executable(string-StringDemo string/StringDemo.cpp)
-
-add_executable(thread-ThreadDemo thread/ThreadDemo.cpp)
-add_executable(thread-ThreadPeter Thread/ThreadPeter.cpp)
-
-add_executable(tree-AVL tree/AVL.cpp)
-add_executable(tree-BinarySortTree tree/BinarySortTree.cpp)
-add_executable(tree-PostOrder tree/PostOrder.cpp)
+# 遍历项目根目录下所有的 .cpp 文件
+file(GLOB_RECURSE files *.cpp)
+foreach (file ${files})
+    string(REGEX REPLACE ".+/(.+)\\..*" "\\1" exe ${file})
+    add_executable(${exe} ${file})
+    message(\ \ \ \ --\ src/${exe}.cpp\ will\ be\ compiled\ to\ bin/${exe})
+endforeach ()
