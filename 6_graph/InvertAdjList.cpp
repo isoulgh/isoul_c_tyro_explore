@@ -56,7 +56,7 @@ struct ArcNode {
     ArcNode *next;                 //下一个邻接点
 };
 struct Graph {
-    struct ArcNode *VertexNode[MaxNum];     //定义顶点表结点，全元素为指针的数组
+    struct ArcNode *VertexNode[MaxNum];     //定义顶点表结点，⭐️全元素为指针的数组
     int VertextNum;                //顶点数量
     int EdgeNum;                   //边的数量
     //int Edge[MaxNum][MaxNum];      //存储边
@@ -92,9 +92,9 @@ void Inverse_Adjacency(Graph GM) {        //输出反向邻接表
         B = B->next;
         while (B != nullptr) {
             ArcNode *A = new ArcNode;
-            A->adjvex = i;  // 每次for循环搞一个顶点
-            A->next = Inverse_GM.VertexNode[B->adjvex]->next; // 把转置表对应顶点的后面节点接A后面
-            Inverse_GM.VertexNode[B->adjvex]->next = A; // 把A连到转置表上去
+            A->adjvex = i;  // ⭐️每次for循环搞一个顶点
+            A->next = Inverse_GM.VertexNode[B->adjvex]->next; // ⭐️把转置表对应顶点的后面节点接A后面
+            Inverse_GM.VertexNode[B->adjvex]->next = A; // ⭐️把A连到转置表上去
             B = B->next;
         }
     }
