@@ -35,7 +35,7 @@ void PostOrder(BiNode *T) {
         }
         if (top > 0) {//if1
             p = &stack[top];
-            while (tag[top] == 1) { // 若可则推出
+            while (tag[top] == 1) { // 根据tag数组，若为1则可推出
                 top--;
                 visit(p->data);
                 p = &stack[top];
@@ -85,11 +85,11 @@ int main() {
 //    while (p || !IsEmpty(S)) {
 //        if (p) {                            //走到最左边
 //            push(S, p);
-//            p = p->Ichild;
+//            p = p->lChild;
 //        } else {                            //向右
 //            GetTop(S, p);                   //读栈顶结点 （非出栈）
-//            if (p->rchild && p->rchild != r)//若右子树存在，且末被访问过
-//                p = p->rchild;              //转向右
+//            if (p->rChild && p->rChild != r)//若右子树存在，且末被访问过
+//                p = p->rChild;              //转向右
 //            else {                          //否则，弹出结点并访问
 //                pop(S, p);                  //将结点弹出
 //                visit(p -›data);            //访问该结点
