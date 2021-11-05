@@ -7,6 +7,8 @@
 * time:15/8/16 15:00
 * environment: ubuntu 14.04， sublime text 3
 */
+// 1按个位1-9分组，2从大到小收集链接链表
+// 3按十位1-9分组，4从大到小收集链接链表
 #include <iostream>
 
 using namespace std;
