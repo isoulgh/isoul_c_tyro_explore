@@ -1,6 +1,9 @@
 //
 // Created by Jason Luo on 2021/11/4.
 //
+
+// 一个A[0]作为哨兵
+
 // 直接插入排序是插入排序的一种，插入排序是每次将一个待排序的序列插入到一个前面已经排好序的子序列当中。
 // 直接插入排序的算法思想如下：
 // （1）查找出L[i]在L[1~i-1]中的插入位置k；
@@ -19,7 +22,7 @@
 int InsertSort(int A[], int n) {  /* 自定义函数 InsertSort() */
     int i, j;
     for (i = 2; i <= n; i++) { // 数组下标从2开始，A[0]做监视哨，A[1]一个数据无可比性
-        A[0] = A[i];    //A[0]为哨兵
+        A[0] = A[i];    // A[0]为哨兵
         for (j = i - 1; A[0] < A[j]; j--) {
             A[j + 1] = A[j];    //元素后移
         }
@@ -54,10 +57,7 @@ int main() {
     InsertSort(A, n);
     auto t2 = std::chrono::steady_clock::now();
     auto dt = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
-    std::cout  << "elapsed time: "
-    << dt
-    << "ns"
-    << std::endl;
+    std::cout  << "Elapsed time: " << dt << "ns" << std::endl;
 //    std::cout  << "elapsed time: "
 //               << double() * std::chrono::nanoseconds::period::num / std::chrono::nanoseconds::period::den
 //               << "s"
