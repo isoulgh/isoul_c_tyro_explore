@@ -19,14 +19,15 @@
 // ③是稳定的排序算法
 
 // 使用插入排序进行升序排列
-int InsertSort(int A[], int n) {  /* 自定义函数 InsertSort() */
-    int i, j;
+int InsertSort(int A[], int n) {
+    int i, j;   // 两次循环变量
+    // for循环，先条件2判断，再执行语句体，最后条件3（++i比i++效率高）
     for (i = 2; i <= n; i++) { // 数组下标从2开始，A[0]做监视哨，A[1]一个数据无可比性
         A[0] = A[i];    // A[0]为哨兵
-        for (j = i - 1; A[0] < A[j]; j--) {
-            A[j + 1] = A[j];    //元素后移
+        for (j = i - 1; A[0] < A[j]; j--) { // 如果j位置元素比i位置小，则每项元素后移
+            A[j + 1] = A[j];    // 元素后移
         }
-        A[j + 1] = A[0];    //将A[j+1] ,即A[i]插入
+        A[j + 1] = A[0];    // 将A[j+1] ,即A[i]插入
     }
     return 0;
 }
@@ -57,7 +58,7 @@ int main() {
     InsertSort(A, n);
     auto t2 = std::chrono::steady_clock::now();
     auto dt = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
-    std::cout  << "Elapsed time: " << dt << "ns" << std::endl;
+    std::cout << "Elapsed time: " << dt << "ns" << std::endl;
 //    std::cout  << "elapsed time: "
 //               << double() * std::chrono::nanoseconds::period::num / std::chrono::nanoseconds::period::den
 //               << "s"

@@ -10,20 +10,19 @@
 
 // 使用折半插入排序进行升序排列
 void BinsertSort(int A[], int n) {
-    int i, j;
     int low, high, mid;
-    for (int i = 2; i <= n; i++) {
+    for (int i = 2; i <= n; i++) {  // 从第二个元素依次向后
         A[0] = A[i];   //哨兵
-        low = 1;
+        low = 1;    // 初始化值，在已经排好序的队列中找位置
         high = i - 1;
-        while (low <= high) {
+        while (low <= high) {   // 在已经排好序的队列中找位置
             mid = (low + high) / 2;
             if (A[mid] > A[0])
                 high = mid - 1;
             else
                 low = mid + 1;
         }
-        for (int j = i - 1; j >= high + 1; j--)
+        for (int j = i - 1; j >= high + 1; j--) // 每项后移，并插入元素
             A[j + 1] = A[j];
         A[high + 1] = A[0];
         //A[low]=A[0];

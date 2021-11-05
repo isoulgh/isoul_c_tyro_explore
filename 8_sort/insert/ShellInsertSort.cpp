@@ -27,13 +27,13 @@ int main() {
     return 0;
 }
 
-int ShellInsert(int A[], int n) {
-    int dk, i, j;
-    for (dk = n / 2; dk >= 1; dk = dk / 2) {
-        for (i = dk + 1; i <= n; i++) {
+int ShellInsert(int A[], int n) {   // 希尔排序是分组后分别进行插入排序
+    int dk, i, j;   // dk是分组距离
+    for (dk = n / 2; dk >= 1; dk = dk / 2) {    // 每次dk/2
+        for (i = dk + 1; i <= n; i++) { // 对分组进行插入排序
             if (A[i] < A[i - dk]) {
-                A[0] = A[i];//哨兵
-                for (j = i - dk; j > 0 && A[0] < A[j]; j -= dk) {
+                A[0] = A[i];    // 哨兵
+                for (j = i - dk; j > 0 && A[0] < A[j]; j -= dk) {   // 每项后移，并插入
                     A[j + dk] = A[j];
                 }
                 A[j + dk] = A[0];
