@@ -30,23 +30,23 @@ int main() {
 }
 
 int Partition(int A[], int low, int high) {
-    int pivot = A[low];//pivot枢点
+    int pivot = A[low]; // pivot枢点，取第一个元素作为基准点
     while (low < high) {
-        while (low < high && A[high] >= pivot)
+        while (low < high && A[high] >= pivot)  // 从后向前找出第一个大于当前元素的值
             high--;
-        A[low] = A[high];
-        while (low < high && A[low] <= pivot)
+        A[low] = A[high];   // 因为low位置已经复制给pivot，所以不用管，直接将high换到low
+        while (low < high && A[low] <= pivot)   // 从前向后找出第一个小于当前元素的值
             low++;
-        A[high] = A[low];
+        A[high] = A[low];   // 找到小的元素直接换到high
     }
-    A[low] = pivot;
+    A[low] = pivot; //从而达到交换的目的
     return low;
 }
 
 void QuickSort(int A[], int low, int high) {
     if (low < high) {
         int pivotpos = Partition(A, low, high);
-        QuickSort(A, low, pivotpos - 1);
+        QuickSort(A, low, pivotpos - 1);    // 对左右分别进行快排
         QuickSort(A, pivotpos + 1, high);
     }
 }

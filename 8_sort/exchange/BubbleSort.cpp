@@ -29,10 +29,10 @@ int main() {
 
 void BubbleSort(int A[], int n) {
     int flag, t;
-    for (int i = 1; i <= n; i++) {//趟数
+    for (int i = 1; i <= n; i++) {  // 趟数
         flag = 0;
-        for (int j = n - 1; j > i; j--) {//每趟的次数
-            if (A[j - 1] > A[j]) {//逆序交换
+        for (int j = n - 1; j > i; j--) {   // 每趟的次数
+            if (A[j - 1] > A[j]) {  // 比较相邻两项大小，若无序则交换
                 t = A[j - 1];
                 A[j - 1] = A[j];
                 A[j] = t;
@@ -40,7 +40,7 @@ void BubbleSort(int A[], int n) {
             }
 
         }
-        if (flag == 0)//若未被交换，则序列有序
+        if (flag == 0)  // 若第一趟就未被交换，则序列有序
             return;
     }
 }
