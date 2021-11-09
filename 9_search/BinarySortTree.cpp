@@ -4,28 +4,31 @@
 
 #include "iostream"
 
-using namespace std;
-
 typedef struct BSTNode {
     int data;
     BSTNode *leftChild;
     BSTNode *rightChild;
 } *BNode;
 
-BSTNode *findTree(int value, BNode root) {
-    BNode result;
+// 查找
+BNode findTree(int value, BNode root) {
+    BNode result = nullptr;
+//    int i = 1;
     while (root != nullptr && value != root->data) {
         if (value < root->data) {
+//            i *= 2;
             root = root->leftChild;
 //            cout << root->data;
         } else {
+//            i = i * 2 + 1;
             root = root->rightChild;
         }
     }
     result = root;
-    return result;
+//    return i;
 }
 
+// 插入
 int insertTree(int value, BNode &root) {
     BNode insertNode = (BNode) malloc(sizeof(BSTNode));
     insertNode->leftChild = nullptr;
@@ -38,13 +41,13 @@ int insertTree(int value, BNode &root) {
         while (root1 != nullptr) {
             if (value < root1->data) {
                 if (root1->leftChild == nullptr) {
-                    root1->leftChild =insertNode;
+                    root1->leftChild = insertNode;
                     return 1;
                 }
                 root1 = root1->leftChild;
             } else {
                 if (root1->rightChild == nullptr) {
-                    root1->rightChild =insertNode;
+                    root1->rightChild = insertNode;
                     return 1;
                 }
                 root1 = root1->rightChild;
@@ -56,7 +59,7 @@ int insertTree(int value, BNode &root) {
 //    } else {
 //        root->rightChild = insertNode;
 //    }
-    return 1;
+    return 0;
 }
 
 void createTree(int *a, int length, BNode &root) {
@@ -65,16 +68,21 @@ void createTree(int *a, int length, BNode &root) {
     while (i < length) {
         insertTree(a[i], root);
         i++;
-        a++;
+//        a++;
     }
+}
+
+// 层序遍历
+void LayerOrder(BNode T) {
+
 }
 
 int main() {
     BNode tree;
     int a[6] = {6, 2, 8, 1, 4, 3};
     createTree(a, 6, tree);
-    BNode result = findTree(4, tree);
-    cout << result->data;
+    int result = findTree(3, tree);
+    std::cout << result;
 //    BNode tree = (BNode) (malloc(sizeof(BSTNode)));
 //    tree->leftChild = NULL;
 //    tree->rightChild = NULL;

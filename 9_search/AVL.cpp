@@ -21,10 +21,8 @@ BTNode *ll_rotate(BTNode *y) {
     BTNode *x = y->left;
     y->left = x->right;
     x->right = y;
-
     y->height = max(height(y->left), height(y->right)) + 1;
     x->height = max(height(x->left), height(x->right)) + 1;
-
     return x;
 }
 
@@ -32,11 +30,8 @@ BTNode *rr_rotate(BTNode *y) {
     BTNode *x = y->right;
     y->right = x->left;
     x->left = y;
-
-
     y->height = max(height(y->left), height(y->right)) + 1;
     x->height = max(height(x->left), height(x->right)) + 1;
-
     return x;
 }
 
