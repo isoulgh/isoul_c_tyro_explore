@@ -6,7 +6,6 @@
 // 构建二叉树：1. 先序遍历 + 中序遍历 2. 后序遍历 + 中序遍历 3. 先序遍历 + 后续遍历（不可行）
 
 #include "iostream"
-
 #define MAXLENGTH 100
 
 struct BiNode {
@@ -14,8 +13,6 @@ struct BiNode {
     BiNode *left;
     BiNode *right;
 };
-
-//typedef BiNode* Queue[];
 
 struct Queue {
     BiNode *T[MAXLENGTH];
@@ -34,9 +31,9 @@ void EnStack(Stack &S, BiNode *T) {
 
 BiNode *DeStack(Stack &S) {
     S.length--;
-    if (S.length > 0) {
-        std::cout << S.T[S.length]->value << "\t";
-    }
+//    if (S.length > 0) {
+//        std::cout << S.T[S.length]->value << "\t";
+//    }
     return S.T[S.length];
 }
 
@@ -45,10 +42,22 @@ void EnQueue(Queue &Q, BiNode *T) {
     ++Q.length;
 }
 
+bool isEmptyStack(Stack s) {
+    if (s.length > 0) {
+        return false;
+    }
+    return true;
+}
+
+BiNode* GetStack(Stack s) {
+    return s.T[s.length - 1];
+}
+
 BiNode GetQueue(Queue &Q, int n) {
     return *Q.T[n];
 }
 
+// 我自己写的
 Queue PostOrder(BiNode &T) {
     Queue Q{};
     Q.length = 0;
@@ -79,6 +88,11 @@ Queue PostOrder(BiNode &T) {
     return Q;
 }
 
+void visit(Stack s) {
+    std::cout << s.T[s.length - 1]->value << "\t";
+}
+
+// 我自己写的
 void PostOrderSearch(BiNode &T, int search) {
     Stack S{};
     S.length = 0;
@@ -116,6 +130,38 @@ void PostOrderSearch(BiNode &T, int search) {
     }
 }
 
+void PostOrderSearch1(BiNode T, int search) {
+    Stack s;
+    s.length = 0;
+    BiNode *p = nullptr, *r = nullptr;
+    p = &T;
+    while (p != nullptr || !isEmptyStack(s)) {
+        if (p != nullptr) {
+            EnStack(s, p);
+            p = p->left;
+        } else {
+            p = GetStack(s);
+            if (p->value == search) {
+                DeStack(s);
+                while (!isEmptyStack(s)) {
+                    visit(s);
+                    DeStack(s);
+                }
+                return;
+            }
+//            p = DeStack(s);
+            if (p->right != nullptr && r != p->right) {
+                p = p->right;
+                r = p;  // 标记此时已经入栈的向右孩子拐的结点
+//                EnStack(s, p);
+            } else {
+                p = DeStack(s);
+                p = nullptr;    // 不让它进第一个if，一直指向左孩子的循环
+            }
+        }
+    }
+}
+
 void PrintQueue(Queue Q) {
     for (int i = 0; i < Q.length; ++i) {
         std::cout << Q.T[i]->value << "\t";
@@ -128,6 +174,7 @@ void PrintStack(Stack s) {
     }
 }
 
+//我自己写的
 //BiNode *InitTree(int *post, int postl, int postr, int *in, int inl, int inr) {
 //    if (postl > postr) { //已经遍历完了，返回
 //        return NULL;
@@ -190,6 +237,7 @@ void PrintStack(Stack s) {
 //}
 
 // 指针传递
+// 通过中序和后序构建树
 void CreateBiTree(BiNode **T, int *in, int *post, int len) {
     int k = 0;
     int *temp = 0;
@@ -239,8 +287,8 @@ void CreateBiTree(BiNode **T, int *in, int *post, int len) {
 //}
 
 int main() {
-    int post[] = {7, 10, 9, 3, 5, 1};
-    int in[] = {7, 3, 10, 9, 1, 5};
+    int post[] = {6,4,2,5,3,1};
+    int in[] = {2,6,4,1,3,5};
     int length = 6;
 //    BiNode T = {0, nullptr, nullptr};
     BiNode *T = nullptr;
@@ -248,14 +296,15 @@ int main() {
     BiNode **T1 = &T;
     CreateBiTree(T1, in, post, length);
 
-    PostOrderSearch(*T, 10);
+    PostOrderSearch1(**T1, 6);
 //    PrintStack(S);
 //    PrintQueue(Q);
     return 0;
 }
 
 // 网上答案
-// 算法思想：采用非递归后序遍历，最后访问根结点，当访问到值为x的结点时，栈中所有元素均为该结点的祖先，依次出栈打印即可。
+// 算法思想：采用非递归后序遍历，最后访问根结点，
+// 当访问到值为x的结点时，栈中所有元素均为该结点的祖先，依次出栈打印即可。
 //int PrintParent_1(BiNode *&p, char x) {
 //    Stack S;
 //    InitStack(S);
@@ -266,7 +315,7 @@ int main() {
 //            p = p->lChild;
 //        } else {
 //            GetTop(S, p);
-//            if (p->data == x) {
+//            if (p->data == x) {   // 判断是否是要找的结点
 //                Pop(S, p);
 //                while (StackEmpty(S) != true) {
 //                    Pop(S, p);
@@ -274,7 +323,7 @@ int main() {
 //                }
 //                return 0;
 //            }
-//            if (p->rChild != NULL && p->rChild != r)
+//            if (p->rChild != NULL && p->rChild != r)  // 第二个条件重要
 //                p = p->rChild;
 //            else {
 //                Pop(S, p);
