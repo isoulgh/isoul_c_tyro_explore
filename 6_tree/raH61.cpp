@@ -6,6 +6,7 @@
 // 构建二叉树：1. 先序遍历 + 中序遍历 2. 后序遍历 + 中序遍历 3. 先序遍历 + 后续遍历（不可行）
 
 #include "iostream"
+
 #define MAXLENGTH 100
 
 struct BiNode {
@@ -49,7 +50,7 @@ bool isEmptyStack(Stack s) {
     return true;
 }
 
-BiNode* GetStack(Stack s) {
+BiNode *GetStack(Stack s) {
     return s.T[s.length - 1];
 }
 
@@ -259,6 +260,50 @@ void CreateBiTree(BiNode **T, int *in, int *post, int len) {
     CreateBiTree(&((*T)->right), in + k + 1, post + k, len - k - 1);
 }
 
+// 一个指针，不可行，无法指针传值。
+void CreateBiTree1(BiNode *T, int *in, int *post, int len) {
+    int k = 0;
+    int *temp;
+    if (len <= 0) {
+        T = nullptr;
+        return;
+    }
+    for (temp = in; temp <= in + len - 1; temp++) {
+        if (*(post + len - 1) == *temp) {
+            k = temp - in;
+            T = (BiNode *) malloc(sizeof(BiNode));
+            T->value = *temp;
+            T->left = nullptr;
+            T->right = nullptr;
+            break;
+        }
+    }
+    CreateBiTree1((*T).left, in, post, k);
+    CreateBiTree1((*T).right, in + k + 1, post + k, len - k - 1);
+}
+
+// T是指针的引用，传入指针，直接使用指针不创建局部变量T
+void CreateBiTree2(BiNode *&T, int *in, int *post, int len) {
+    int k = 0;
+    int *temp = 0;
+    if (len <= 0) {
+        T = nullptr;
+        return;
+    }
+    for (temp = in; temp <= in + len - 1; temp++) {
+        if (*(post + len - 1) == *temp) {
+            k = temp - in;
+            T = (BiNode *) malloc(sizeof(BiNode));
+            T->value = *temp;
+            T->left = nullptr;
+            T->right = nullptr;
+            break;
+        }
+    }
+    CreateBiTree2(T->left, in, post, k);
+    CreateBiTree2(T->right, in + k + 1, post + k, len - k - 1);
+}
+
 // 引用传递
 //void CreateBiTree(BiNode &T, int *in, int *post, int len) {
 //    int k = 0;
@@ -287,16 +332,32 @@ void CreateBiTree(BiNode **T, int *in, int *post, int len) {
 //}
 
 int main() {
-    int post[] = {6,4,2,5,3,1};
-    int in[] = {2,6,4,1,3,5};
+    int post[] = {6, 4, 2, 5, 3, 1};
+    int in[] = {2, 6, 4, 1, 3, 5};
     int length = 6;
+    int a = 6;
 //    BiNode T = {0, nullptr, nullptr};
-    BiNode *T = nullptr;
 
-    BiNode **T1 = &T;
+//    不可行
+//    BiNode *T = (BiNode *) malloc(sizeof(BiNode));;
+//    CreateBiTree1(T, in, post, length);
+//    std::cout << "single pointer" << std::endl;
+//    PostOrderSearch1(*T, a);
+//
+//    std::cout << "" << std::endl;
+
+    BiNode *T2;
+    BiNode **T1 = &T2;
     CreateBiTree(T1, in, post, length);
+    std::cout << "double pointer" << std::endl;
+    PostOrderSearch1(**T1, a);
 
-    PostOrderSearch1(**T1, 6);
+    std::cout << "" << std::endl;
+
+    BiNode *T4;
+    CreateBiTree2(T4, in, post, length);
+    std::cout << "refer " << std::endl;
+    PostOrderSearch1(*T4, a);
 //    PrintStack(S);
 //    PrintQueue(Q);
     return 0;
